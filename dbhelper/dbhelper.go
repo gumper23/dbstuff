@@ -43,7 +43,10 @@ func QueryRows(db *sql.DB, query string) (results []map[string]string, cols []st
 		}
 		results = append(results, row)
 	}
-	err = rows.Err()
+	if err = rows.Err(); err != nil {
+		return
+	}
+	err = rows.Close()
 	return
 }
 
